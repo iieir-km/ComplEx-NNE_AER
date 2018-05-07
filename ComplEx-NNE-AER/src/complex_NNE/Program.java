@@ -1,0 +1,89 @@
+package complex_NNE;
+
+import util.Arguments;
+
+public class Program {
+	public static void main(String[] args) throws Exception {
+		Arguments cmmdArg = new Arguments(args);
+		ComplEx model = new ComplEx();
+		String fnTrainTriples = "";
+		String fnValidTriples = "";
+		String fnTestTriples = "";
+		String fnAllTriples = "";
+		String strNumRelation = "";
+		String strNumEntity = "";
+		
+		try {
+			fnTrainTriples = cmmdArg.getValue("train");
+			if (fnTrainTriples == null || fnTrainTriples.equals("")) {
+				Usage();
+				return;
+			}
+			fnValidTriples = cmmdArg.getValue("valid");
+			if (fnValidTriples == null || fnValidTriples.equals("")) {
+				Usage();
+				return;
+			}
+			fnTestTriples = cmmdArg.getValue("test");
+			if (fnTestTriples == null || fnTestTriples.equals("")) {
+				Usage();
+				return;
+			}
+			fnAllTriples = cmmdArg.getValue("all");
+			if (fnAllTriples == null || fnAllTriples.equals("")) {
+				Usage();
+				return;
+			}
+			strNumRelation = cmmdArg.getValue("m");
+			if (strNumRelation == null || strNumRelation.equals("")) {
+				Usage();
+				return;
+			}
+			strNumEntity = cmmdArg.getValue("n");
+			if (strNumEntity == null || strNumEntity.equals("")) {
+				Usage();
+				return;
+			}
+			if (cmmdArg.getValue("k") != null && !cmmdArg.getValue("k").equals("")) {
+				model.m_NumFactor = Integer.parseInt(cmmdArg.getValue("k"));
+			}
+			if (cmmdArg.getValue("lmbda") != null && !cmmdArg.getValue("lmbda").equals("")) {
+				model.m_Lambda = Double.parseDouble(cmmdArg.getValue("lmbda"));
+			}
+			if (cmmdArg.getValue("gamma") != null && !cmmdArg.getValue("gamma").equals("")) {
+				model.m_Gamma = Double.parseDouble(cmmdArg.getValue("gamma"));
+			}
+			if (cmmdArg.getValue("neg") != null && !cmmdArg.getValue("neg").equals("")) {
+				model.m_NumNegative = Integer.parseInt(cmmdArg.getValue("neg"));
+			}
+			if (cmmdArg.getValue("#") != null && !cmmdArg.getValue("#").equals("")) {
+				model.m_NumIteration = Integer.parseInt(cmmdArg.getValue("#"));
+			}
+			
+			model.initialization(strNumRelation, strNumEntity, fnTrainTriples, fnValidTriples, fnTestTriples, fnAllTriples);
+			System.out.println("\nStart learning ComplEx (nonnegative E) model");
+			model.learn();
+			System.out.println("Success.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			Usage();
+			return;
+		}
+	}
+	
+	static void Usage() {
+		System.out.println(
+				"Usagelala: java ComplEx -train train_triples -valid valid_triples -test test_triples -all all_triples" +
+				"-m number_of_relations -n number_of_entities [options]\n\n"
+				+
+				
+				"Options: \n"
+				+ "   -k        -> number of latent factors (default 50)\n"
+				+ "   -lmbda    -> regularization parameter (default 0.001)\n"
+				+ "   -gamma    -> initial learning rate (default 0.1)\n"
+				+ "   -neg      -> number of negative instances (default 2)\n"
+				+ "   -#        -> number of iterations (default 1000)\n"
+				+ "   -skip     -> number of skipped iterations (default 50)\n\n"
+				);
+	}
+}
