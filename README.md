@@ -1,9 +1,9 @@
 # ComplEx-NNE+AER
 
-Codes and datasets for "Improving Knowledge graph embedding using simple constraints" (ACL-2018)
+Codes and datasets for "Improving Knowledge Graph Embedding Using Simple Constraints" (ACL-2018)
 ## Introduction
 The repository provides java implementations and DB100K dataset used for the paper:
-* [Improving Knowledge graph embedding using simple constraints](). Boyang Ding, Quan Wang, Bin Wang and Li Guo. ACL 2018.
+* [Improving Knowledge Graph Embedding Using Simple Constraints](https://arxiv.org/abs/1805.02408). Boyang Ding, Quan Wang, Bin Wang and Li Guo. ACL 2018.
 
 As well as the implementations for the following papers:
 * [Complex Embeddings for Simple Link Prediction](http://proceedings.mlr.press/v48/trouillon16.pdf). Théo Trouillon, Johannes Welbl, Sebastian Riedel, Éric Gaussier and Guillaume Bouchard. ICML 2016.
